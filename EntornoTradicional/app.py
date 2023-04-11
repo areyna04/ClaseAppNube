@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import requests
 
 app = Flask(__name__)
@@ -9,9 +10,8 @@ def signup():
     password1 = request.args.get('password1')
     password2 = request.args.get('password2')
     email = request.args.get('email')
-    token = "aaaaaaaaaaaaaaaaaaa"
     if password1 == password2:
-        return jsonify({"message":"Sign Up Successful", "token":token}), 200 
+        return jsonify({"message":"Sign Up Successful"}), 200 
     else:
         return jsonify({"error":"Sign Up NOT Successful"}), 400  
 
@@ -19,8 +19,10 @@ def signup():
 def login():
     username = request.args.get('username')
     password = request.args.get('password')
-    if password == password:
-        return jsonify({"message":"Sign Up Successful"}), 200 
+    user = "user" ## Consulta a base de datos
+    if user:
+        token = create_access_token(identity=user)
+        return jsonify({"message":"Sign Up Successful", "token":token}), 200 
     else:
         return jsonify({"error":"Sign Up NOT Successful"}), 400 
 
