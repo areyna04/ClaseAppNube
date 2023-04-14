@@ -7,4 +7,10 @@ Flask-SQLAlchemy==2.5.1
 Requests==2.11.1
 urllib3
 flask_restful
-psycopg2
+Flask-Migrate
+marshmallow
+marshmallow-sqlalchemy
+PyJWT
+SQLAlchemy
+sqlalchemy-orm
+gunicorn
