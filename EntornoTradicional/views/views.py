@@ -5,6 +5,8 @@ from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 import json 
 import hashlib
+import base64
+import os
 
 from models import \
     db, \
@@ -64,3 +66,44 @@ class VistaLogIn(Resource):
         db.session.close()
         db.session.close_all()
         return '', 204
+    
+class VistaTasks(Resource):
+    @jwt_required()
+    def get(self):
+        convertRequests = convertRequest.query.all()
+        return [convert_request_schema.dump(convertRequest) for convertRequest in convertRequests]
+
+    @jwt_required()
+    def post(self):
+        file_name=request.json["file_name"]
+        resp=""
+        user = request.json["id_user"]
+        user_path="files/"+user 
+        if not os.path.isdir(user_path ):
+            os.makedirs(user_path)
+
+        new_convertRequest = convertRequest( \
+            id_user = request.json["id_user"], \
+            format_request = request.json["format_request"]
+        )
+
+        db.session.add(new_convertRequest)
+        db.session.flush()
+        file_origin_path=user_path+"/"+ str(new_convertRequest.id_request) 
+        os.makedirs(file_origin_path)
+        file_origin_path=file_origin_path+"/"+file_name
+        new_convertRequest.file_origin_path= file_origin_path
+        file_b64=request.json["file_b64"]
+        with open(file_origin_path, "wb") as fh:
+            fh.write(base64.b64decode(file_b64))
+        if(os.path.exists(file_origin_path)):
+            db.session.commit()  
+            resp=convert_request_schema.dump(new_convertRequest)
+        else:
+            db.session.rollback()
+            resp= {"cod": "ER001", "error": "Error al procesar archivo", "id_trasaction": new_convertRequest.id_request }
+        
+        
+        return resp
+        
+

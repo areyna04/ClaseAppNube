@@ -5,6 +5,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema , auto_field
 from sqlalchemy import Column, Identity
 from sqlalchemy import Table
 from sqlalchemy import ForeignKey
+import datetime
 
 db = SQLAlchemy()
 
@@ -20,12 +21,12 @@ class User(db.Model):
 
 class convertRequest(db.Model):
     __tablename__ = "convert_request"
-    id = db.Column(db.Integer, primary_key=True)
+    id_request = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     file_origin_path = db.Column(db.String(128))
     format_request = db.Column(db.String(128))
-    status = db.Column(db.String(128))
-    datereg = db.Column(db.DateTime)
+    status = db.Column(db.String(128), default='uploaded')
+    datereg = db.Column(db.DateTime, default=datetime.datetime.utcnow) 
     file_request_path = db.Column(db.String(128))
 
 
@@ -48,11 +49,10 @@ class ConvertRequestSchema(SQLAlchemyAutoSchema):
         include_fk = True
         load_instance = True
         
-    id = fields.String()
+    id_request = fields.String()
     id_user = fields.String()
     file_origin_path = fields.String()
     format_request = fields.String()
     status = fields.String()
     datereg = fields.String()
-    file_request_path = fields.String()
 

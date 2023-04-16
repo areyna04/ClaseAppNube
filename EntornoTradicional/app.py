@@ -5,10 +5,11 @@ from flask_restful import Api
 
 from models import db
 from views import \
-    VistaSignIn, VistaLogIn
+    VistaSignIn, VistaLogIn, VistaTasks
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.145.28.41:5432/appnube"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
 app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -24,5 +25,6 @@ api = Api(app)
 
 api.add_resource(VistaSignIn, '/api/auth/signup')
 api.add_resource(VistaLogIn, '/api/auth/login')
+api.add_resource(VistaTasks, '/api/tasks')
 
 jwt = JWTManager(app)

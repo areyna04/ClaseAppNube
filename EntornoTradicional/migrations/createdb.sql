@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS public.convert_request
     file_origin_path character varying COLLATE pg_catalog."default",
     format_request character varying COLLATE pg_catalog."default",
     status character varying COLLATE pg_catalog."default" DEFAULT 'uploaded'::character varying,
-    datereg time without time zone DEFAULT now(),
+    datereg timestamp without time zone DEFAULT now(),
     file_request_path character varying COLLATE pg_catalog."default",
     CONSTRAINT convert_request_pkey PRIMARY KEY (id_request),
     CONSTRAINT user_id_fk FOREIGN KEY (id_user)
