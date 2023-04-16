@@ -13,4 +13,5 @@ class Tarbz2FormatoAdapter( AdaptadorFormatoCompresion) :
         with tarfile.open(input_file, "r:bz2") as tar:
             tar.extractall(output_path)
                 
-                
+    def dar_extension(self) -> string :
+        return  "tar.bz2"             

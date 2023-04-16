@@ -9,3 +9,7 @@ class AdaptadorFormatoCompresion(ABC):
     def descomprimir(self, input_file, output_path):
         pass
     
+    
+    @abstractmethod
+    def dar_extension(self) -> string :
+        pass

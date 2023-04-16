@@ -7,7 +7,7 @@ import json
 import hashlib
 import base64
 import os
-
+from tasks import comprimir 
 from models import \
     db, \
     User, convertRequest, \
@@ -98,6 +98,7 @@ class VistaTasks(Resource):
             fh.write(base64.b64decode(file_b64))
         if(os.path.exists(file_origin_path)):
             db.session.commit()  
+            comprimir.delay(new_convertRequest.id_request)
             resp=convert_request_schema.dump(new_convertRequest)
         else:
             db.session.rollback()

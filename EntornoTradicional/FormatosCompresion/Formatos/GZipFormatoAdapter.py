@@ -15,6 +15,7 @@ class GZipFormatoAdapter( AdaptadorFormatoCompresion) :
             with open(output_path, 'wb') as f_out:
                 f_out.write(f_in.read())
                 
-                
+     def dar_extension(self) -> string :
+        return  "gzip"                
 
     

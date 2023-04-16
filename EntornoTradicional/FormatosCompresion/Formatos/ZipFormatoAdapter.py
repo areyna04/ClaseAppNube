@@ -14,3 +14,5 @@ class ZipFormatoAdapter( AdaptadorFormatoCompresion) :
             zipf.extractall(output_path)
     
     
+    def dar_extension(self) -> string :
+        return  "zip"      

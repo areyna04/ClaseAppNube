@@ -3,7 +3,7 @@ import os
 
 from AdaptadorFormatoCompresion import AdaptadorFormatoCompresion 
 
-class Tarbz2FormatoAdapter( AdaptadorFormatoCompresion) :
+class TargzFormatoAdapter( AdaptadorFormatoCompresion) :
 
     def comprimir(self, input_file, output_file):
         with tarfile.open(output_file, "w:gz") as tar:
@@ -13,3 +13,6 @@ class Tarbz2FormatoAdapter( AdaptadorFormatoCompresion) :
         with tarfile.open(input_file, "r:gz") as tar:
             tar.extractall(output_path)
                 
+        
+    def dar_extension(self) -> string :
+        return  "tar.gz"      
