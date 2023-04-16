@@ -1,13 +1,13 @@
 
 import zipfile
 from celery import Celery
-from AdaptadorFormatoCompresion
-from ZipFormatoAdapter
-from F7zFormatoAdapter
-from GZipFormatoAdapter
-from TargzFormatoAdapter
-from Tarbz2FormatoAdapter
-from ManagerCompresion
+from adaptadorFormatoCompresion import AdaptadorFormatoCompresion
+from zipFormatoAdapter import ZipFormatoAdapter 
+from 7zFormatoAdapter import F7zFormatoAdapter
+from gZipFormatoAdapter import GZipFormatoAdapter
+from targzFormatoAdapter import TargzFormatoAdapter
+from tarbz2FormatoAdapter import Tarbz2FormatoAdapter
+from managerCompresion import ManagerCompresion
 import os 
  
 
@@ -21,8 +21,8 @@ from models import \
     User, convertRequest, \
     UserSchema, ConvertRequestSchema
 
-cnstringDatabase  = os.environ["DATABASE_URL"]
-cnstringRedis = os.environ["REDIS_URL"]
+cnstringDatabase  =  "postgres://postgres:convertir@54.226.135.40:5432/appnube" # os.environ["DATABASE_URL"]
+cnstringRedis =    "redis://54.226.135.40:6379/0" # os.environ["REDIS_URL"]
 app = Celery( 'tasks' , broker = cnstringRedis )
 
 Engine = create_engine(cnstringDatabase)

@@ -1,7 +1,7 @@
 import pylzma
 import os
 
-from AdaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
 
 class F7zFormatoAdapter( AdaptadorFormatoCompresion) :
 

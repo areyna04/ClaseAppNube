@@ -1,6 +1,6 @@
 import gzip
 import io
-from AdaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
 
 class GZipFormatoAdapter( AdaptadorFormatoCompresion) :
 

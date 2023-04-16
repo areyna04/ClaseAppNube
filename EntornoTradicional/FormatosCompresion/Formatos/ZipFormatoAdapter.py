@@ -1,6 +1,6 @@
 import zipfile
 import io
-from AdaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
 
 class ZipFormatoAdapter( AdaptadorFormatoCompresion) :
 
