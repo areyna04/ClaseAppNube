@@ -70,8 +70,17 @@ class VistaLogIn(Resource):
 class VistaTasks(Resource):
     @jwt_required()
     def get(self):
-        convertRequests = convertRequest.query.all()
-        return [convert_request_schema.dump(convertRequest) for convertRequest in convertRequests]
+        user = request.json["id_user"]
+        max = request.json["max"]
+        if(max.isnumeric):
+            if(request.json["order"]=="1"):
+                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.desc()).limit(int(max)).all()
+            else:
+                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.asc()).limit(int(max)).all()
+            return [convert_request_schema.dump(convertRequest) for convertRequest in convertRequests]
+        else:
+            return {"cod": "ER002", "error": "el número maximo de registros debe ser un número" }
+        
 
     @jwt_required()
     def post(self):
