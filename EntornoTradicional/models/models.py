@@ -9,7 +9,6 @@ import datetime
 from sqlalchemy.orm import Session
 
 db = SQLAlchemy()
-session = Session(bind=engine)
 
 class User(db.Model):
     __tablename__ = 'user'

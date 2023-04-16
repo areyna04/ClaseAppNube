@@ -7,37 +7,15 @@ volumes:
   files_path:
 
 services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: convertir
-      POSTGRES_DB: appnube
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  redis:
-    image: redis
-    container_name: redis
-    restart: always
-    volumes:
-      - redis_data:/data/redis
-    ports:
-      - "6379:6379"
+  
 
   celery_worker:
     build: ./worker
     restart: always
     environment:
-      DATABASE_URL: postgres://postgres:convertir@postgres:5432/appnube
-      REDIS_URL: redis://redis:6379/0
-    depends_on:
-      - postgres
-      - redis
+      DATABASE_URL: postgres://postgres:convertir@54.226.135.40:5432/appnube
+      REDIS_URL: redis://54.226.135.40:6379/0
+   
     command: celery -A tasks worker --loglevel=info    
     volumes:
       - files_path:/data/files  
@@ -46,11 +24,9 @@ services:
     build: .
     restart: always
     environment:
-      DATABASE_URL: postgres://postgres:convertir@postgres:5432/appnube
-      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://postgres:convertir@54.226.135.40:5432/appnube
+      REDIS_URL: redis://54.226.135.40:6379/0
     depends_on:
-      - postgres
-      - redis
       - celery_worker
     ports:
       - "8000:8000"

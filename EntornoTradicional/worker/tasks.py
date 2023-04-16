@@ -8,13 +8,29 @@ from GZipFormatoAdapter
 from TargzFormatoAdapter
 from Tarbz2FormatoAdapter
 from ManagerCompresion
+import os 
+ 
+
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
 
 from models import \
     db, \
     User, convertRequest, \
     UserSchema, ConvertRequestSchema
 
-app = Celery( 'tasks' , broker = 'redis://redis:6379/0' )
+cnstringDatabase  = os.environ["DATABASE_URL"]
+cnstringRedis = os.environ["REDIS_URL"]
+app = Celery( 'tasks' , broker = cnstringRedis )
+
+Engine = create_engine(cnstringDatabase)
+Session = sessionmaker(bind=Engine)
+session = Session()
+
+
+
 
 @app.task
 def comprimir(id_request):
@@ -26,12 +42,11 @@ def comprimir(id_request):
                 'targz' :TargzFormatoAdapter
                 'tarbz2' :Tarbz2FormatoAdapter
         }
-        request = convertRequest.query.filter(  convertRequest.id_request == id_request ).first()
+        request = session.query(convertRequest).filter(  convertRequest.id_request == id_request ).first()
         if request.status == "uploaded" :
-        formato = formatos[request.format_request]() 
-        if formato not is none:
-                managerFormatoCompresion = ManagerCompresion(formato)
-                request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
-                request.status = 'processed';                
-                db.session.add()
-                db.session.flush()
+                formato = formatos[request.format_request]() 
+                if formato not is none:
+                        managerFormatoCompresion = ManagerCompresion(formato)
+                        request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
+                        request.status = 'processed';                
+                        session.commit()
