@@ -21,4 +21,5 @@ SQLAlchemy==1.4.15
 Werkzeug==2.0.1
 sqlalchemy-orm==1.2.4
 gunicorn==20.1.0
+redis
 celery==5.2.7
