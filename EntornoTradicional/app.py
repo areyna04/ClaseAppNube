@@ -8,8 +8,8 @@ from views import \
     VistaSignIn, VistaLogIn, VistaTasks
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.145.28.41:5432/appnube"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.145.28.41:5432/appnube"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
 app.config['PROPAGATE_EXCEPTIONS'] = True
