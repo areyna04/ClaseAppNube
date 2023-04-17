@@ -1,0 +1,25 @@
+
+
+class TareaCompresion() :
+
+        
+    def procesar_archivo_compresion(id_request):
+        formatos = {
+                'zip': ZipFormatoAdapter,
+                '7z': F7zFormatoAdapter,
+                'gzip': GZipFormatoAdapter,
+                'targz' :TargzFormatoAdapter,
+                'tarbz2' :Tarbz2FormatoAdapter
+        }
+        request = session.query(convertRequest).filter(  convertRequest.id_request == id_request ).first()
+        if request.status == "uploaded" :
+                formato = formatos[request.format_request]() 
+                if formato is not  none:
+                        managerFormatoCompresion = ManagerCompresion(formato)
+                        request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
+                        request.status = 'processed';                
+                        session.commit()
+
+
+
+                        

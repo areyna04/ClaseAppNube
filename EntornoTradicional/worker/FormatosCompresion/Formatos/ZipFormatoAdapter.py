@@ -1,6 +1,6 @@
 import zipfile
 import io
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion 
 
 class ZipFormatoAdapter( AdaptadorFormatoCompresion) :
 
@@ -14,5 +14,5 @@ class ZipFormatoAdapter( AdaptadorFormatoCompresion) :
             zipf.extractall(output_path)
     
     
-    def dar_extension(self) -> string :
+    def dar_extension(self):
         return  "zip"      

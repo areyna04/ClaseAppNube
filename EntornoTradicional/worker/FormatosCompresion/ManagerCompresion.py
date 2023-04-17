@@ -1,11 +1,12 @@
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion
+from  worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion
 import io
+import os
 
 class  ManagerCompresion( ): 
     def __init__(self, adapter):
         self.adapter = adapter
     
-    def comprimir(self, input_file) -> string :
+    def comprimir(self, input_file):
         path_sin_extencion = os.path.splitext(input_file )[0]
         output_file =  f"{path_sin_extencion}.{self.adapter.dar_extension()}"
         self.adapter.comprimir(input_file, output_file)
