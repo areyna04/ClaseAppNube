@@ -12,5 +12,5 @@ class AdaptadorFormatoCompresion(ABC):
     
     
     @abstractmethod
-    def dar_extension(self) -> string :
+    def dar_extension(self)  :
         pass

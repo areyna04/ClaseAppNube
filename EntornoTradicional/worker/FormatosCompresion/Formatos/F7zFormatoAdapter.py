@@ -1,7 +1,7 @@
 import pylzma
 import os
 
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion 
 
 class F7zFormatoAdapter( AdaptadorFormatoCompresion) :
 
@@ -18,6 +18,6 @@ class F7zFormatoAdapter( AdaptadorFormatoCompresion) :
                 # Escribir los datos descomprimidos en el archivo
                 output_file.write(input_file.read())
 
-    def dar_extension(self) -> string :
+    def dar_extension(self)  :
         return  "7z"            
                 

@@ -1,7 +1,7 @@
 import tarfile
 import os
 
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion 
 
 class TargzFormatoAdapter( AdaptadorFormatoCompresion) :
 
@@ -14,5 +14,5 @@ class TargzFormatoAdapter( AdaptadorFormatoCompresion) :
             tar.extractall(output_path)
                 
         
-    def dar_extension(self) -> string :
+    def dar_extension(self):
         return  "tar.gz"      

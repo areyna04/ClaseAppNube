@@ -1,7 +1,7 @@
 import tarfile
 import os
 
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion 
+from worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion 
 
 class Tarbz2FormatoAdapter( AdaptadorFormatoCompresion) :
 
@@ -13,5 +13,5 @@ class Tarbz2FormatoAdapter( AdaptadorFormatoCompresion) :
         with tarfile.open(input_file, "r:bz2") as tar:
             tar.extractall(output_path)
                 
-    def dar_extension(self) -> string :
+    def dar_extension(self):
         return  "tar.bz2"             
