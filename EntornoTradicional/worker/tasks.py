@@ -1,13 +1,13 @@
 
 import zipfile
 from celery import Celery
-from adaptadorFormatoCompresion import AdaptadorFormatoCompresion
-from zipFormatoAdapter import ZipFormatoAdapter 
-from 7zFormatoAdapter import F7zFormatoAdapter
-from gZipFormatoAdapter import GZipFormatoAdapter
-from targzFormatoAdapter import TargzFormatoAdapter
-from tarbz2FormatoAdapter import Tarbz2FormatoAdapter
-from managerCompresion import ManagerCompresion
+import AdaptadorFormatoCompresion
+import ZipFormatoAdapter 
+import F7zFormatoAdapter
+import GZipFormatoAdapter
+import TargzFormatoAdapter
+import Tarbz2FormatoAdapter
+import ManagerCompresion
 import os 
  
 
@@ -29,23 +29,20 @@ Engine = create_engine(cnstringDatabase)
 Session = sessionmaker(bind=Engine)
 session = Session()
 
-
-
-
 @app.task
 def comprimir(id_request):
 
         formatos = {
                 'zip': ZipFormatoAdapter,
                 '7z': F7zFormatoAdapter,
-                'gzip': GZipFormatoAdapter
-                'targz' :TargzFormatoAdapter
+                'gzip': GZipFormatoAdapter,
+                'targz' :TargzFormatoAdapter,
                 'tarbz2' :Tarbz2FormatoAdapter
         }
         request = session.query(convertRequest).filter(  convertRequest.id_request == id_request ).first()
         if request.status == "uploaded" :
                 formato = formatos[request.format_request]() 
-                if formato not is none:
+                if formato is not  none:
                         managerFormatoCompresion = ManagerCompresion(formato)
                         request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
                         request.status = 'processed';                
