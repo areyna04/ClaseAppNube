@@ -132,3 +132,24 @@ class VistaFile(Resource):
             "file": b64file.decode()
         }
         return datos
+
+class VistaTask(Resource):
+    @jwt_required()
+    def get(self, id_request):
+        convertRequests = convertRequest.query.get_or_404(id_request)
+        return convert_request_schema.dump(convertRequests)
+    
+    @jwt_required()
+    def delete(self, id_request):
+        convertRequests = convertRequest.query.get_or_404(id_request)
+        if( convertRequests.status=='uploaded'):
+            resp= {"message":"Esta Tarea aun no esta procesada, no se puede eliminar"}
+        else:
+            if(os.path.exists(os.path.dirname(convertRequests.file_origin_path))):
+                shutil.rmtree(os.path.dirname(convertRequests.file_origin_path))
+
+            db.session.delete(convertRequests)
+            db.session.commit()
+            resp= {"message":"Tarea eliminada correctamente"}
+        
+        return resp
