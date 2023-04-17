@@ -3,9 +3,8 @@ FROM python:3.11
 RUN apt-get update && apt-get -y install cron
 WORKDIR /app
 COPY . .
-COPY cron /etc/cron.d/cron
-RUN chmod 0644 /etc/cron.d/cron
-RUN crontab /etc/cron.d/cron
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 CMD celery -A tasks worker -l info
+
+

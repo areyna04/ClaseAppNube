@@ -1,19 +1,49 @@
 
 import zipfile
 from celery import Celery
+import AdaptadorFormatoCompresion
+import ZipFormatoAdapter 
+import F7zFormatoAdapter
+import GZipFormatoAdapter
+import TargzFormatoAdapter
+import Tarbz2FormatoAdapter
+import ManagerCompresion
+import os 
+ 
 
-app = Celery( 'tasks' , broker = 'redis://redis:6379/0' )
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
+
+from models import \
+    db, \
+    User, convertRequest, \
+    UserSchema, ConvertRequestSchema
+
+cnstringDatabase  =  "postgres://postgres:convertir@54.226.135.40:5432/appnube" # os.environ["DATABASE_URL"]
+cnstringRedis =    "redis://54.226.135.40:6379/0" # os.environ["REDIS_URL"]
+app = Celery( 'tasks' , broker = cnstringRedis )
+
+Engine = create_engine(cnstringDatabase)
+Session = sessionmaker(bind=Engine)
+session = Session()
 
 @app.task
-def test_tarea(nombre):
-        return '\n--->Se agrega tarea de prueba!!!: %s' % nombre
+def comprimir(id_request):
 
-@app.task
-def comprimir(filename, zipname, new_path):
-    print ('\n-> Se va a comprimir el archivo: {}'.format(filename))
-    zfile = zipfile.ZipFile(new_path + '/' + zipname, 'w')
-    zfile.write(filename, compress_type = zipfile.ZIP_DEFLATED)
-    zfile.close()
-    print ('\n-> El archivo comprimido se copió a : {}'.format(new_path))
-
+        formatos = {
+                'zip': ZipFormatoAdapter,
+                '7z': F7zFormatoAdapter,
+                'gzip': GZipFormatoAdapter,
+                'targz' :TargzFormatoAdapter,
+                'tarbz2' :Tarbz2FormatoAdapter
+        }
+        request = session.query(convertRequest).filter(  convertRequest.id_request == id_request ).first()
+        if request.status == "uploaded" :
+                formato = formatos[request.format_request]() 
+                if formato is not  none:
+                        managerFormatoCompresion = ManagerCompresion(formato)
+                        request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
+                        request.status = 'processed';                
+                        session.commit()

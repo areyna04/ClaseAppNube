@@ -1,0 +1,37 @@
+version: '3'
+
+
+volumes:
+  postgres_data:
+  redis_data:
+  files_path:
+
+services:
+  
+
+  celery_worker:
+    build: ./worker
+    restart: always
+    environment:
+      DATABASE_URL: postgres://postgres:convertir@54.226.135.40:5432/appnube
+      REDIS_URL: redis://54.226.135.40:6379/0
+   
+    command: celery -A tasks worker --loglevel=info    
+    volumes:
+      - files_path:/data/files  
+
+  python_api:
+    build: .
+    restart: always
+    environment:
+      DATABASE_URL: postgres://postgres:convertir@54.226.135.40:5432/appnube
+      REDIS_URL: redis://54.226.135.40:6379/0
+    depends_on:
+      - celery_worker
+    ports:
+      - "8000:8000"
+    volumes:
+      - files_path:/data/files 
+
+
+

@@ -6,10 +6,9 @@ from sqlalchemy import Column, Identity
 from sqlalchemy import Table
 from sqlalchemy import ForeignKey
 import datetime
+from sqlalchemy.orm import Session
 
 db = SQLAlchemy()
-
-
 
 class User(db.Model):
     __tablename__ = 'user'
