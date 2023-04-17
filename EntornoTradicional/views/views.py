@@ -108,6 +108,7 @@ class VistaTasks(Resource):
         if(os.path.exists(file_origin_path)):
             db.session.commit()  
             comprimir.delay(new_convertRequest.id_request)
+            print (f"enviando a celery id {new_convertRequest.id_request}")
             resp=convert_request_schema.dump(new_convertRequest)
         else:
             db.session.rollback()

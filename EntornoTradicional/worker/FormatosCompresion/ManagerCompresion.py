@@ -1,5 +1,6 @@
 from  worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion
 import io
+import os
 
 class  ManagerCompresion( ): 
     def __init__(self, adapter):

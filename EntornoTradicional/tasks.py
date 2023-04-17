@@ -42,7 +42,7 @@ session = Session()
 
 @app.task
 def comprimir(id_request):
-
+        print (f" recibiendo id {id_request}  ")
         formatos = {
                 'zip': ZipFormatoAdapter,
                 '7z': F7zFormatoAdapter,
