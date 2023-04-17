@@ -115,4 +115,20 @@ class VistaTasks(Resource):
         
         return resp
         
-
+class VistaFile(Resource):
+    @jwt_required()
+    def get(self, id_request):
+        convertRequests = convertRequest.query.get_or_404(id_request)
+        if(request.json["original_file"]=="1"):
+           path=  convertRequests.file_origin_path  
+        elif(request.json["original_file"]=="0"):
+            path=  convertRequests.file_origin_path
+        else:
+            return {"cod": "ER003", "error": "Error en parametro"}
+        with open(path, 'rb') as file:
+            content = file.read()
+            b64file = base64.b64encode(content)
+        datos = {
+            "file": b64file.decode()
+        }
+        return datos

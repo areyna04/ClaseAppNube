@@ -5,7 +5,7 @@ from flask_restful import Api
 
 from models import db
 from views import \
-    VistaSignIn, VistaLogIn, VistaTasks
+    VistaSignIn, VistaLogIn, VistaTasks, VistaFile
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
@@ -26,5 +26,5 @@ api = Api(app)
 api.add_resource(VistaSignIn, '/api/auth/signup')
 api.add_resource(VistaLogIn, '/api/auth/login')
 api.add_resource(VistaTasks, '/api/tasks')
-
+api.add_resource(VistaFile, '/api/file/<int:id_request>')
 jwt = JWTManager(app)
