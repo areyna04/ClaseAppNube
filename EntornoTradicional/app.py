@@ -9,7 +9,7 @@ from views import \
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.226.135.40:5432/appnube"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.86.141.90:5432/appnube"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
 app.config['PROPAGATE_EXCEPTIONS'] = True
