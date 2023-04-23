@@ -32,7 +32,7 @@ from models import \
     User, convertRequest, \
     UserSchema, ConvertRequestSchema
 
-cnstringDatabase  =  "postgresql://postgres:convert@54.226.135.40:5432/appnube" # os.environ["DATABASE_URL"]
+cnstringDatabase  =  "postgresql://postgres:convert@54.86.141.90:5432/appnube" # os.environ["DATABASE_URL"]
 cnstringRedis =    "redis://localhost:6379/0" # os.environ["REDIS_URL"]
 app = Celery( 'tasks' , broker = cnstringRedis )
 

@@ -68,7 +68,7 @@ class VistaLogIn(Resource):
         return '', 204
     
 class VistaTasks(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         user = request.json["id_user"]
         max = request.json["max"]
@@ -82,7 +82,7 @@ class VistaTasks(Resource):
             return {"cod": "ER002", "error": "el número maximo de registros debe ser un número" }
         
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         file_name=request.json["file_name"]
         resp=""
