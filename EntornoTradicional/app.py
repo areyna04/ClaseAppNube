@@ -1,15 +1,15 @@
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++from flask import Flask
+from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
-
+import os 
 from models import db
 from views import \
     VistaSignIn, VistaLogIn, VistaTasks, VistaFile, VistaTask
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:wilson@localhost:5432/appnube"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:convert@54.86.141.90:5432/appnube"
+app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get("SQLALCHEMY_DATABASE_URI")   # "postgresql://postgres:convert@54.86.141.90:5432/appnube"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
 app.config['PROPAGATE_EXCEPTIONS'] = True

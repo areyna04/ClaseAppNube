@@ -8,6 +8,27 @@ volumes:
 
 services:
   
+  
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_data:/data/redis
+    ports:
+      - "6379:6379"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: appnube
+      POSTGRES_PASSWORD: convertir
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      # copia el script sql para crear las tablas
+      - ./migrations/createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
+    ports:
+      - "5432:5432"
 
   celery_worker:
     build: ./worker
@@ -32,6 +53,5 @@ services:
       - "8000:8000"
     volumes:
       - files_path:/data/files 
-
 
 
