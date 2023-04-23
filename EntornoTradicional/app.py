@@ -29,3 +29,6 @@ api.add_resource(VistaTasks, '/api/tasks')
 api.add_resource(VistaFile, '/api/file/<int:id_request>')
 api.add_resource(VistaTask, '/api/task/<int:id_request>')
 jwt = JWTManager(app)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
