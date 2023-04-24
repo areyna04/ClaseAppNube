@@ -1,3 +1,4 @@
+import shutil    
 from flask import request
 from flask_jwt_extended import jwt_required, create_access_token
 from flask_restful import Resource
@@ -12,6 +13,7 @@ from models import \
     db, \
     User, convertRequest, \
     UserSchema, ConvertRequestSchema
+
 
 user_schema = UserSchema()
 convert_request_schema = ConvertRequestSchema()
