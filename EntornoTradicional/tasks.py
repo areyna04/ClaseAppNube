@@ -53,7 +53,7 @@ def comprimir(id_request):
         request = session.query(convertRequest).filter(  convertRequest.id_request == id_request ).first()
         if request.status == "uploaded" :
                 formato = formatos[request.format_request]() 
-                if formato is not  none:
+                if (formato is not None):
                         managerFormatoCompresion = ManagerCompresion(formato)
                         request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
                         request.status = 'processed';                
