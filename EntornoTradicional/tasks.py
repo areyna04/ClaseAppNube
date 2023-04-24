@@ -7,7 +7,7 @@ from  worker.FormatosCompresion.Formatos.F7zFormatoAdapter import F7zFormatoAdap
 from  worker.FormatosCompresion.Formatos.GZipFormatoAdapter import GZipFormatoAdapter
 from  worker.FormatosCompresion.Formatos.TargzFormatoAdapter import TargzFormatoAdapter
 from  worker.FormatosCompresion.Formatos.Tarbz2FormatoAdapter import Tarbz2FormatoAdapter
-from  worker.FormatosCompresion import ManagerCompresion 
+from  worker.FormatosCompresion.ManagerCompresion import ManagerCompresion 
 import os 
  
 
