@@ -9,7 +9,7 @@ class ManagerFiles ():
         
     def sync(self,  aux_path , file_name  , file_base64  ) :
         try: 
-            local_path =   f"files/{str(uuid.uuid4())}/{file_name}"
+            local_path =os.path.abspath( f"EntornoTradicional/files/{str(uuid.uuid4())}/{file_name}")
             remote_path =  f"{aux_path}/{file_name}" 
             local_dir = os.path.dirname(local_path)
             os.makedirs(local_dir, exist_ok=True)    
@@ -34,7 +34,7 @@ class ManagerFiles ():
         try:
             file_name = os.path.basename(remote_path)
             if self.storage   is not None: 
-                local_path =   f"files/{str(uuid.uuid4())}/{file_name}"
+                local_path =   os.path.abspath( f"EntornoTradicional/files/{str(uuid.uuid4())}/{file_name}")
                 self.storage.get_file(remote_path , local_path)
             else:
                 local_path = remote_path 
