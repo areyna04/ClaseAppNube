@@ -1,5 +1,5 @@
 import shutil
-from EntornoTradicional.admin_files.GestorArchivos import GestorArchivos
+from EntornoTradicional.admin_files.ManagerFiles import  ManagerFiles
 from EntornoTradicional.storage.cloudStorage import CloudStorage    
 from flask import request
 from flask_jwt_extended import jwt_required, create_access_token
@@ -29,6 +29,10 @@ class AdminUsers():
         return {"mensaje": "usuario creado exitosamente", "id": nuevo_usuario.id}
 
 admin_user = AdminUsers()
+
+storage = CloudStorage()
+manager_files = ManagerFiles(storage)
+
 
 
 class VistaSignIn(Resource):
@@ -100,11 +104,9 @@ class VistaTasks(Resource):
 
         db.session.add(new_convertRequest)
         db.session.flush()
-        
-        gestorArchivos = GestorArchivos(CloudStorage())
-        procesoOk , mensaje , remote_path  = gestorArchivos.sync( aux_path =  f"/{user}/{new_convertRequest.id_request}"   , file_name=  file_name , fbase64 =  request.json["file_b64"] )
+        proceso_ok ,  remote_path , mensaje  = manager_files.sync( aux_path =  f"/{user}/{new_convertRequest.id_request}"   , file_name=  file_name , fbase64 =  request.json["file_b64"] )
     
-        if(procesoOk):
+        if(proceso_ok):
             new_convertRequest.file_origin_path= remote_path
             new_convertRequest.file_name = file_name
             db.session.commit()  
@@ -122,13 +124,19 @@ class VistaFile(Resource):
     @jwt_required()
     def get(self, id_request):
         convertRequests = convertRequest.query.get_or_404(id_request)
+        
         if(request.json["original_file"]=="1"):
-           path=  convertRequests.file_origin_path  
+            remote_path =  convertRequests.file_origin_path  
         elif(request.json["original_file"]=="0"):
-            path=  convertRequests.file_origin_path
+            remote_path=  convertRequests.file_request_path
         else:
             return {"cod": "ER003", "error": "Error en parametro"}
-        with open(path, 'rb') as file:
+        
+        proceso_ok, local_path, mensaje  = manager_files.get_file(remote_path)
+        if  proceso_ok is False:
+            return {"cod": "ER004", "error": f"Error en proceso {mensaje}"}
+        
+        with open(local_path, 'rb') as file:
             content = file.read()
             b64file = base64.b64encode(content)
         datos = {
