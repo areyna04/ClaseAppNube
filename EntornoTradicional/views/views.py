@@ -104,9 +104,14 @@ class VistaTasks(Resource):
         os.makedirs(file_origin_path)
         file_origin_path=file_origin_path+"/"+file_name
         new_convertRequest.file_origin_path= file_origin_path
+        
+        
         file_b64=request.json["file_b64"]
         with open(file_origin_path, "wb") as fh:
             fh.write(base64.b64decode(file_b64))
+            
+            
+            
         if(os.path.exists(file_origin_path)):
             db.session.commit()  
             comprimir.delay(new_convertRequest.id_request)
