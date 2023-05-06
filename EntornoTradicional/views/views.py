@@ -1,4 +1,6 @@
-import shutil    
+import shutil
+from EntornoTradicional.admin_files.GestorArchivos import GestorArchivos
+from EntornoTradicional.storage.cloudStorage import CloudStorage    
 from flask import request
 from flask_jwt_extended import jwt_required, create_access_token
 from flask_restful import Resource
@@ -90,9 +92,7 @@ class VistaTasks(Resource):
         resp=""
         user = request.json["id_user"]
         user_path="files/"+user 
-        if not os.path.isdir(user_path ):
-            os.makedirs(user_path)
-
+        
         new_convertRequest = convertRequest( \
             id_user = request.json["id_user"], \
             format_request = request.json["format_request"]
@@ -100,26 +100,20 @@ class VistaTasks(Resource):
 
         db.session.add(new_convertRequest)
         db.session.flush()
-        file_origin_path=user_path+"/"+ str(new_convertRequest.id_request) 
-        os.makedirs(file_origin_path)
-        file_origin_path=file_origin_path+"/"+file_name
-        new_convertRequest.file_origin_path= file_origin_path
         
-        
-        file_b64=request.json["file_b64"]
-        with open(file_origin_path, "wb") as fh:
-            fh.write(base64.b64decode(file_b64))
-            
-            
-            
-        if(os.path.exists(file_origin_path)):
+        gestorArchivos = GestorArchivos(CloudStorage())
+        procesoOk , mensaje , remote_path  = gestorArchivos.sync( aux_path =  f"/{user}/{new_convertRequest.id_request}"   , file_name=  file_name , fbase64 =  request.json["file_b64"] )
+    
+        if(procesoOk):
+            new_convertRequest.file_origin_path= remote_path
+            new_convertRequest.file_name = file_name
             db.session.commit()  
             comprimir.delay(new_convertRequest.id_request)
             print (f"enviando a celery id {new_convertRequest.id_request}")
             resp=convert_request_schema.dump(new_convertRequest)
         else:
             db.session.rollback()
-            resp= {"cod": "ER001", "error": "Error al procesar archivo", "id_trasaction": new_convertRequest.id_request }
+            resp= {"cod": "ER001", "error": "Error al procesar archivo" + mensaje , "id_trasaction": new_convertRequest.id_request }
         
         
         return resp

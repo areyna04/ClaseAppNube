@@ -1,5 +1,7 @@
 
+import io
 import zipfile
+from EntornoTradicional.storage.cloudStorage import CloudStorage
 from celery import Celery
 from  worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion
 from  worker.FormatosCompresion.Formatos.ZipFormatoAdapter  import ZipFormatoAdapter 
@@ -55,6 +57,11 @@ def comprimir(id_request):
                 formato = formatos[request.format_request]() 
                 if (formato is not None):
                         managerFormatoCompresion = ManagerCompresion(formato)
+                        storage = CloudStorage()
+                        localPath = 'files/tmp/' + request.id_user + '/' +
+                        storage.get_file(request.file_origin_path , request.file_origin_path)
+
                         request.file_request_path =  managerFormatoCompresion.comprimir(request.file_origin_path)  
                         request.status = 'processed';                
                         session.commit()
+                        os.remove()       

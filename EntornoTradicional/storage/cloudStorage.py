@@ -1,20 +1,22 @@
 from  google.cloud import storage 
-
+import os 
 from storage.storageAbstract import IStorage 
 
 class CloudStorage (IStorage):
     
     def __init__(self) -> None:
         super().__init__()
+        #"bucket-project-cloud-storage-files"
+        name_bucket = os.environ.get("bucket_files");
         self.client = storage.Client()
-        self.bucket  = self.client.bucket("bucket-project-cloud-storage-files")  
+        self.bucket  = self.client.bucket(name_bucket)  
         
     
-    def push_file(self ,  file  ,  filename):
-        blob = self.bucket.blob(filename)
-        blob.upload_from_file(file)
+    def push_file(self ,  fileNameLocal,fileNameRemote   ):
+        blob = self.bucket.blob(fileNameRemote)
+        blob.upload_from_file(fileNameLocal)
         
-    def get_file(self , file ,  filename):
-        blob = self.bucket.blob(filename)
-        blob.download_to_file(file)
-        return file
+    def get_file(self ,fileNameLocal,fileNameRemote   ):
+        blob = self.bucket.blob(fileNameRemote)
+        blob.download_to_filename(fileNameLocal)
+        
