@@ -15,6 +15,7 @@ class ManagerFiles ():
             os.makedirs(local_dir, exist_ok=True)    
             with open(local_path, "wb") as fh:
                 fh.write(base64.b64decode(file_base64))
+                
             if self.storage   is not None:
                 self.storage.push_file(local_path , remote_path)
                 os.remove(local_path)
@@ -27,8 +28,9 @@ class ManagerFiles ():
             error =f"Unexpected {ext=}, {type(ext)=}"    
             print(error)
             return False ,  "", error
+       
         
-    def get_file( self , remote_path   ):
+    def get_file( self , remote_path   ): 
         try:
             file_name = os.path.basename(remote_path)
             if self.storage   is not None: 
@@ -37,10 +39,16 @@ class ManagerFiles ():
             else:
                 local_path = remote_path 
             if os.path.exists(local_path):
-                return True ,   local_path , ""
+                return True ,   local_path ,  ""
             else :
                 return False  ,  "No existe archivo"
         except Exception as ext:    
             error =f"Unexpected {ext=}, {type(ext)=}"    
             print(error)
             return False , "" ,  error          
+        
+    def get_file_base64(file_name):
+        with open(file_name, 'rb') as file:
+            content = file.read()
+            return base64.b64encode(content)
+        
