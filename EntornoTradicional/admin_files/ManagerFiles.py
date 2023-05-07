@@ -1,4 +1,4 @@
-from EntornoTradicional.storage.storageAbstract import IStorage
+from storage.storageAbstract import IStorage
 import uuid
 import os 
 import base64

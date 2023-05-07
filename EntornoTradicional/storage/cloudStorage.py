@@ -1,6 +1,6 @@
 from  google.cloud import storage 
 import os 
-from EntornoTradicional.storage.storageAbstract import IStorage 
+from storage.storageAbstract import IStorage 
 
 class CloudStorage (IStorage):
     

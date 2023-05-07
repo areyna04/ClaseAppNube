@@ -1,8 +1,8 @@
 
 import io
 import zipfile
-from EntornoTradicional.storage.cloudStorage import CloudStorage
-from EntornoTradicional.admin_files.ManagerFiles  import ManagerFiles
+from storage.cloudStorage import CloudStorage
+from  admin_files.ManagerFiles  import ManagerFiles
 from celery import Celery
 from  worker.FormatosCompresion.Formatos.AdaptadorFormatoCompresion  import AdaptadorFormatoCompresion
 from  worker.FormatosCompresion.Formatos.ZipFormatoAdapter  import ZipFormatoAdapter 
