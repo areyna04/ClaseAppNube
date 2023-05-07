@@ -25,7 +25,6 @@ api = Api(app)
 
 api.add_resource(VistaSignIn, '/api/auth/signup')
 api.add_resource(VistaLogIn, '/api/auth/login')
-api.add_resource(VistaTasks, '/api/tasks')
 api.add_resource(VistaTasks, '/api/tasks/<string:user>/<string:max>/<string:order>')
 api.add_resource(VistaFile, '/api/file/<int:id_request>/<string:original_file>')
 api.add_resource(VistaTask, '/api/task/<int:id_request>')
