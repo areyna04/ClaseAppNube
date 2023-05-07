@@ -36,7 +36,8 @@ class CloudStorage (IStorage):
         except Exception as ext:    
             error =f"Unexpected {ext=}, {type(ext)=}"    
             print(error)
-            return False     
+        
+        return False     
         
     def delete_file(self , file_name_remote    ):
         try:
@@ -47,7 +48,8 @@ class CloudStorage (IStorage):
         except Exception as ext:    
             error =f"Unexpected {ext=}, {type(ext)=}"    
             print(error)
-            
+        return False     
+    
     def exists_file(self , file_name_remote    ):
         try:
             blob = self.bucket.blob(file_name_remote)

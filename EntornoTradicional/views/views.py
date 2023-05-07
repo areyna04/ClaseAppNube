@@ -95,7 +95,7 @@ class VistaTasks(Resource):
         file_name=request.json["file_name"]
         resp=""
         user = request.json["id_user"]
-        user_path="files/"+user 
+        
         
         new_convertRequest = convertRequest( \
             id_user = request.json["id_user"], \
@@ -104,7 +104,7 @@ class VistaTasks(Resource):
 
         db.session.add(new_convertRequest)
         db.session.flush()
-        proceso_ok ,  remote_path , mensaje  = manager_files.sync( aux_path =  f"/{user}/{new_convertRequest.id_request}"   , file_name=  file_name , fbase64 =  request.json["file_b64"] )
+        proceso_ok ,  remote_path , mensaje  = manager_files.sync( aux_path =  f"files/{user}/{new_convertRequest.id_request}"   , file_name=  file_name , file_base64 =  request.json["file_b64"] )
     
         if(proceso_ok):
             new_convertRequest.file_origin_path= remote_path
@@ -142,6 +142,8 @@ class VistaFile(Resource):
         datos = {
             "file": b64file.decode()
         }
+        manager_files.delete_local_file(local_path)
+        
         return datos
 
 class VistaTask(Resource):

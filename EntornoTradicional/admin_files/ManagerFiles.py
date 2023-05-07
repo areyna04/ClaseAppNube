@@ -35,20 +35,35 @@ class ManagerFiles ():
             file_name = os.path.basename(remote_path)
             if self.storage   is not None: 
                 local_path =   os.path.abspath( f"EntornoTradicional/files/{str(uuid.uuid4())}/{file_name}")
-                self.storage.get_file(remote_path , local_path)
+                local_dir = os.path.dirname(local_path)
+                os.makedirs(local_dir, exist_ok=True)   
+                self.storage.get_file( local_path , remote_path)
             else:
                 local_path = remote_path 
             if os.path.exists(local_path):
                 return True ,   local_path ,  ""
             else :
-                return False  ,  "No existe archivo"
+                return False  , "" , "No existe archivo" 
         except Exception as ext:    
             error =f"Unexpected {ext=}, {type(ext)=}"    
             print(error)
             return False , "" ,  error          
         
-    def get_file_base64(file_name):
+    def get_file_base64(self, file_name):
         with open(file_name, 'rb') as file:
             content = file.read()
             return base64.b64encode(content)
+    
+    def delete_local_file(self ,  local_path_file ):
+        local_dir = os.path.dirname(local_path_file)
+        os.remove(local_path_file)
+        os.removedirs(local_dir)
         
+    
+    def delete_remote_file( self , remote_path   ): 
+        try:
+            return  self.storage.delete_file( remote_path),  ""
+        except Exception as ext:    
+            error =f"Unexpected {ext=}, {type(ext)=}"    
+            print(error)
+            return False ,  error          
