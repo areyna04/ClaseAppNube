@@ -159,9 +159,11 @@ class VistaTask(Resource):
         if( convertRequests.status=='uploaded'):
             resp= {"message":"Esta Tarea aun no esta procesada, no se puede eliminar"}
         else:
-            if(os.path.exists(os.path.dirname(convertRequests.file_origin_path))):
-                shutil.rmtree(os.path.dirname(convertRequests.file_origin_path))
-
+            ##if(os.path.exists(os.path.dirname(convertRequests.file_origin_path))):
+            ##    shutil.rmtree(os.path.dirname(convertRequests.file_origin_path))
+            manager_files.delete_remote_file(convertRequests.file_origin_path)
+            manager_files.delete_remote_file(convertRequests.file_request_path)
+            
             db.session.delete(convertRequests)
             db.session.commit()
             resp= {"message":"Tarea eliminada correctamente"}
