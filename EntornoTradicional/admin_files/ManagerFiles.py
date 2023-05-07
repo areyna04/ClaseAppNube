@@ -34,7 +34,7 @@ class ManagerFiles ():
         try:
             file_name = os.path.basename(remote_path)
             if self.storage   is not None: 
-                local_path =   os.path.abspath( f"EntornoTradicional/files/{str(uuid.uuid4())}/{file_name}")
+                local_path =   os.path.abspath( f"files/{str(uuid.uuid4())}/{file_name}")
                 print(local_path)
                 local_dir = os.path.dirname(local_path)
                 os.makedirs(local_dir, exist_ok=True)   
