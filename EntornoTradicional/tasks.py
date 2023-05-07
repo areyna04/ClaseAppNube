@@ -70,7 +70,7 @@ def comprimir(id_request):
                                 local_path_request  =  managerFormatoCompresion.comprimir(local_path) 
                                 local_path_request_file_name  = os.path.basename(local_path_request)
 
-                                aux_path =  f"/{request.id_user }/{id_request}"  
+                                aux_path =  f"files/{request.id_user }/{id_request}"  
                                 proceso_ok,  remote_path  , mensaje=  manager_files.sync(aux_path ,local_path_request_file_name , manager_files.get_file_base64(local_path_request)  )   
                                 if  not proceso_ok :
                                         raise Exception(mensaje)
@@ -78,8 +78,10 @@ def comprimir(id_request):
                                 request.file_request_path = remote_path
                                 request.status = 'processed';                
                                 session.commit()
-                                os.remove(local_path)  
-                                os.removedirs(os.path.dirname(local_path))
+                                manager_files.delete_local_file(local_path) 
+                                manager_files.delete_local_file(local_path_request) 
+                                #os.remove(local_path)  
+                                #os.removedirs(os.path.dirname(local_path))
         except Exception as ext:    
                 error =f"Unexpected {ext=}, {type(ext)=}"    
                 print(error)
