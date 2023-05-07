@@ -47,7 +47,7 @@ storage = CloudStorage()
 manager_files = ManagerFiles(storage)
 
 
-@app.task(bind=True, autoretry_for=(Exception), retry_kwargs={'max_retries': 7, 'countdown': 5})
+@app.task
 def comprimir(id_request):
         try:
                 print (f" recibiendo id {id_request}  ")
