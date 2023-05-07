@@ -75,23 +75,9 @@ class VistaLogIn(Resource):
         db.session.close()
         db.session.close_all()
         return '', 204
-    
-class VistaTasks(Resource):
-    #@jwt_required()
-    def get(self, user ,max  ,order  ):
-        #user = request.json["id_user"]
-        #max = request.json["max"]
-        if(max.isnumeric):
-            if(order=="1"):
-                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.desc()).limit(int(max)).all()
-            else:
-                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.asc()).limit(int(max)).all()
-            return [convert_request_schema.dump(convertRequest) for convertRequest in convertRequests]
-        else:
-            return {"cod": "ER002", "error": "el número maximo de registros debe ser un número" }
-        
 
-    #@jwt_required()
+class VistaTasksPost(Resource):    
+    @jwt_required()
     def post(self):
         file_name=request.json["file_name"]
         resp=""
@@ -120,7 +106,19 @@ class VistaTasks(Resource):
         
         
         return resp
+class VistaTasksGet(Resource):
+    #@jwt_required()
+    def get(self, user ,max  ,order  ):
+        if(max.isnumeric):
+            if(order=="1"):
+                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.desc()).limit(int(max)).all()
+            else:
+                convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.asc()).limit(int(max)).all()
+            return [convert_request_schema.dump(convertRequest) for convertRequest in convertRequests]
+        else:
+            return {"cod": "ER002", "error": "el número maximo de registros debe ser un número" }
         
+
 class VistaFile(Resource):
     @jwt_required()
     def get(self, id_request, original_file ):
@@ -128,7 +126,7 @@ class VistaFile(Resource):
         
         if(original_file =="1"):
             remote_path =  convertRequests.file_origin_path  
-        elif(original_file =="0"):
+        elif(original_file=="0"):
             remote_path=  convertRequests.file_request_path
         else:
             return {"cod": "ER003", "error": "Error en parametro"}
