@@ -78,11 +78,11 @@ class VistaLogIn(Resource):
     
 class VistaTasks(Resource):
     #@jwt_required()
-    def get(self):
-        user = request.json["id_user"]
-        max = request.json["max"]
+    def get(self, user ,max  ,order  ):
+        #user = request.json["id_user"]
+        #max = request.json["max"]
         if(max.isnumeric):
-            if(request.json["order"]=="1"):
+            if(order=="1"):
                 convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.desc()).limit(int(max)).all()
             else:
                 convertRequests = convertRequest.query.filter(convertRequest.id_user==user).order_by(convertRequest.id_request.asc()).limit(int(max)).all()
@@ -123,12 +123,12 @@ class VistaTasks(Resource):
         
 class VistaFile(Resource):
     @jwt_required()
-    def get(self, id_request):
+    def get(self, id_request, original_file ):
         convertRequests = convertRequest.query.get_or_404(id_request)
         
-        if(request.json["original_file"]=="1"):
+        if(original_file =="1"):
             remote_path =  convertRequests.file_origin_path  
-        elif(request.json["original_file"]=="0"):
+        elif(original_file =="0"):
             remote_path=  convertRequests.file_request_path
         else:
             return {"cod": "ER003", "error": "Error en parametro"}
