@@ -3,10 +3,9 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 import os
-from views.views import VistaTasksGet, VistaTasksPost 
 from models import db
 from views import \
-    VistaSignIn, VistaLogIn, VistaTasks, VistaFile, VistaTask
+    VistaSignIn, VistaLogIn, VistaTasksGet, VistaTasksPost , VistaFile, VistaTask
 
 app = Flask(__name__)
 
