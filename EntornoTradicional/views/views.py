@@ -17,6 +17,12 @@ from models import \
     User, convertRequest, \
     UserSchema, ConvertRequestSchema
 
+from pubsub.ManagerPublishTask import  ManagerPublishTask
+
+project_id =  os.environ.get("PUB_SUB_PROJECT_ID")   
+topic_name =  os.environ.get("TOPIC")
+manager_publish_task  = ManagerPublishTask(project_id , topic_name )
+
 
 user_schema = UserSchema()
 convert_request_schema = ConvertRequestSchema()
@@ -97,7 +103,12 @@ class VistaTasksPost(Resource):
             new_convertRequest.file_origin_path= remote_path
             new_convertRequest.file_name = file_name
             db.session.commit()  
-            comprimir.delay(new_convertRequest.id_request)
+            manager_publish_task.send_task(new_convertRequest.id_request)
+                        
+
+            #comprimir.delay(new_convertRequest.id_request)
+
+
             print (f"enviando a celery id {new_convertRequest.id_request}")
             resp=convert_request_schema.dump(new_convertRequest)
         else:
