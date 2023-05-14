@@ -5,19 +5,19 @@ from worker.WorkerCompresion import TareaCompresion
 
 class ManagerSubscriberTask():
     
-    def __init__(self, project_id, topic_name) -> None:
+    def __init__(self, project_id, topic_name_1 ) -> None:
         self.subscriber = pubsub_v1.SubscriberClient()
 
 
 
         topic_name = 'projects/{project_id}/topics/{topic}'.format(
             project_id=project_id ,
-            topic=topic_name,  # Set this to something appropriate.
+            topic=topic_name_1,  # Set this to something appropriate.
         )
 
         subscription_name = 'projects/{project_id}/subscriptions/{sub}'.format(
             project_id=project_id,
-            sub=f"{topic_name}-sub",  # Set this to something appropriate.
+            sub=f"{topic_name_1}-sub",  # Set this to something appropriate.
         )
 
 
