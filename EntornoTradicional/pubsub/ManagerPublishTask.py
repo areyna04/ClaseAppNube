@@ -14,6 +14,7 @@ class ManagerPublishTask():
 
         self.publisher = pubsub_v1.PublisherClient()
         self.project_id = project_id 
+        print(self.topic_name )
         ##self.topic_name = topic_name
 
     def send_task(  self,  message):
