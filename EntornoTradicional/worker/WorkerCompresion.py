@@ -13,8 +13,6 @@ from  worker.FormatosCompresion.ManagerCompresion import ManagerCompresion
 import os 
 import base64
 
-
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session , sessionmaker
@@ -33,9 +31,7 @@ from models import \
     UserSchema, ConvertRequestSchema
 
 
-
 cnstringDatabase  =  os.environ.get("SQLALCHEMY_DATABASE_URI")   #    "postgresql://postgres:convert@54.86.141.90:5432/appnube" # os.environ["DATABASE_URL"]
-cnstringRedis =      os.environ.get("REDIS_URL") # "redis://localhost:6379/0" # os.environ["REDIS_URL"]
 Engine = create_engine(cnstringDatabase)
 Session = sessionmaker(bind=Engine)
 session = Session()
@@ -46,7 +42,7 @@ manager_files = ManagerFiles(storage)
 
 class TareaCompresion() :
 
-        def comprimir(id_request):
+        def comprimir(self, id_request):
                 try:
                         print (f" recibiendo id {id_request}  ")
                         formatos = {
@@ -78,11 +74,10 @@ class TareaCompresion() :
                                         session.commit()
                                         manager_files.delete_local_file(local_path) 
                                         manager_files.delete_local_file(local_path_request) 
-                                        #os.remove(local_path)  
-                                        #os.removedirs(os.path.dirname(local_path))
+                                        return True 
                 except Exception as ext:    
                         error =f"Unexpected {ext=}, {type(ext)=}"    
                         print(error)
-                        raise       
+                        return False       
 
                                 
