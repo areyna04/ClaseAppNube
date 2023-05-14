@@ -76,10 +76,12 @@ class TareaCompresion() :
                                         session.commit()
                                         manager_files.delete_local_file(local_path) 
                                         manager_files.delete_local_file(local_path_request) 
-                        proc_ok = True  ;                
+                        proc_ok = True  ; 
+                        
                 except Exception as ext:    
                         error =f"Unexpected {ext=}, {type(ext)=}"    
                         print(error)
-                        return False       
-
+                        proc_ok = False  ;      
+                
+                return   proc_ok;                     
                                 
