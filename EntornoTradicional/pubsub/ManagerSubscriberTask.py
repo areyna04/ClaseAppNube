@@ -22,7 +22,7 @@ class ManagerSubscriberTask():
 
 
         self.subscription_path =  subscription_name  # self.subscriber.subscription_path(project_id, f"{topic_name}-sub")
-        self.subscriber.create_subscription(name=self.subscription_path, topic=topic_name)
+        #self.subscriber.create_subscription(name=self.subscription_path, topic=topic_name)
         print(f'subscripcion  path {self.subscription_path}  topico : {topic_name} ' )
 
     def suscribir_topic_comprimir(self):
