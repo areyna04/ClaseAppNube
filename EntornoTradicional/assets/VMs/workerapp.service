@@ -1,0 +1,31 @@
+#Config Servicio worker inicio automatico app.py
+#$ sudo nano /etc/systemd/system/workerapp.service
+
+[Unit]
+Description=Celery Worker APP
+After=network.target
+
+[Service]
+User=mr_gomezc1
+Group=mr_gomezc1
+
+WorkingDirectory=/home/mr_gomezc1/ClaseAppNube/EntornoTradicional/
+Environment="SQLALCHEMY_DATABASE_URI=postgresql://postgres:convert@35.239.90.117:5432/appnube"
+Environment="REDIS_URL=redis://10.128.0.5:6379/0"
+Environment="TOPIC=topic-compresion-files"
+Environment="GOOGLE_CLOUD_PROJECT=firm-structure-383412"
+Environment="bucket_files=web_api_data"
+
+ExecStart=/home/mr_gomezc1/venv/bin/python3 tasksSubscriber.py
+#ExecStart=celery -A tasks worker -l info
+
+[Install]
+WantedBy=multi-user.target
+
+# status workerapp.service--review
+
+#sudo systemctl daemon-reload
+#sudo systemctl start workerapp
+#sudo systemctl status workerapp
+#sudo systemctl enable workerapp
+#sudo systemctl stop workerapp

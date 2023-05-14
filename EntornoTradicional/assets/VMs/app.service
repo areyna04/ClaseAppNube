@@ -1,0 +1,28 @@
+#Config Servicio web api inicio automatico app.py
+#$ sudo nano /etc/systemd/system/app.service
+
+[Unit]
+Description=Gunicorn
+After=network.target
+
+[Service]
+User=mr_gomezc1
+#Group=mr_gomezc1
+WorkingDirectory=/home/mr_gomezc1/ClaseAppNube/EntornoTradicional/
+Environment="SQLALCHEMY_DATABASE_URI=postgresql://postgres:convert@35.239.90.117:5432/appnube"
+Environment="REDIS_URL=redis://10.128.0.5:6379/0"
+Environment="TOPIC=topic-compresion-files"
+Environment="PUB_SUB_PROJECT_ID=firm-structure-383412"
+Environment="bucket_files=web_api_data"
+ExecStart=/home/mr_gomezc1/venv/bin/python3 app.py
+
+[Install]
+WantedBy=multi-user.target
+
+# status app.service--review
+
+#sudo systemctl daemon-reload
+#sudo systemctl start app
+#sudo systemctl status app
+#sudo systemctl enable app
+#sudo systemctl stop app

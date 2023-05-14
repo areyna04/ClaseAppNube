@@ -26,3 +26,4 @@ pylzma==0.5.0
 redis
 psycopg2-binary
 google-cloud-storage
+google-cloud-pubsub
