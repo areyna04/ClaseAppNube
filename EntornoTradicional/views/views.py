@@ -19,7 +19,7 @@ from models import \
 
 from pubsub.ManagerPublishTask import  ManagerPublishTask
 
-project_id =  os.environ.get("PUB_SUB_PROJECT_ID")   
+project_id =  os.getenv('GOOGLE_CLOUD_PROJECT')  
 topic_name =  os.environ.get("TOPIC")
 manager_publish_task  = ManagerPublishTask(project_id , topic_name )
 
@@ -103,7 +103,7 @@ class VistaTasksPost(Resource):
             new_convertRequest.file_origin_path= remote_path
             new_convertRequest.file_name = file_name
             db.session.commit()  
-            manager_publish_task.send_task(new_convertRequest.id_request)
+            manager_publish_task.send_task(str(new_convertRequest.id_request))
                         
 
             #comprimir.delay(new_convertRequest.id_request)
