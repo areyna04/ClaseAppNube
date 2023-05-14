@@ -33,7 +33,9 @@ class ManagerSubscriberTask():
                 tarea =  TareaCompresion()
                 id_request = mensaje.data.decode('utf-8')
                 print(f'procesando mensaje   {id_request} ' )
+
                 resultado_ok= tarea.comprimir(id_request)
+                print(f'estado proceso  {id_request} : {resultado_ok}  ' )
                 if resultado_ok :
                     mensaje.ack()
 
