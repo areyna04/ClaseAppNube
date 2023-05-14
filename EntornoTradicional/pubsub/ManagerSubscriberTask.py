@@ -7,7 +7,21 @@ class ManagerSubscriberTask():
     
     def __init__(self, project_id, topic_name) -> None:
         self.subscriber = pubsub_v1.SubscriberClient()
-        self.subscription_path = self.subscriber.subscription_path(project_id, f"{topic_name}-sub")
+
+
+
+        topic_name = 'projects/{project_id}/topics/{topic}'.format(
+            project_id=project_id ,
+            topic=topic_name,  # Set this to something appropriate.
+        )
+
+        subscription_name = 'projects/{project_id}/subscriptions/{sub}'.format(
+            project_id=project_id,
+            sub=f"{topic_name}-sub",  # Set this to something appropriate.
+        )
+
+
+        self.subscription_path =  subscription_name  # self.subscriber.subscription_path(project_id, f"{topic_name}-sub")
         self.subscriber.create_subscription(name=self.subscription_path, topic=topic_name)
         print(f'subscripcion  path {self.subscription_path}  topico : {topic_name} ' )
 
