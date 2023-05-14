@@ -43,6 +43,7 @@ manager_files = ManagerFiles(storage)
 class TareaCompresion() :
 
         def comprimir(self, id_request):
+                proc_ok = True 
                 try:
                         print (f" recibiendo id {id_request}  ")
                         formatos = {
@@ -66,15 +67,16 @@ class TareaCompresion() :
 
                                         aux_path =  f"files/{request.id_user }/{id_request}"  
                                         proceso_ok,  remote_path  , mensaje=  manager_files.sync(aux_path ,local_path_request_file_name , manager_files.get_file_base64(local_path_request)  )   
+                                        proc_ok  = proceso_ok 
                                         if  not proceso_ok :
                                                 raise Exception(mensaje)
-                                        
+                                        proc_ok  = proceso_ok 
                                         request.file_request_path = remote_path
                                         request.status = 'processed';                
                                         session.commit()
                                         manager_files.delete_local_file(local_path) 
                                         manager_files.delete_local_file(local_path_request) 
-                                        return True 
+                        proc_ok = True  ;                
                 except Exception as ext:    
                         error =f"Unexpected {ext=}, {type(ext)=}"    
                         print(error)
