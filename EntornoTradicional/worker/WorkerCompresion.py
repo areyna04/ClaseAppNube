@@ -72,7 +72,8 @@ class TareaCompresion() :
                                                 raise Exception(mensaje)
                                         proc_ok  = proceso_ok 
                                         request.file_request_path = remote_path
-                                        request.status = 'processed';                
+                                        request.status = 'processed';    
+                                        session.flush()            
                                         session.commit()
                                         manager_files.delete_local_file(local_path) 
                                         manager_files.delete_local_file(local_path_request) 
