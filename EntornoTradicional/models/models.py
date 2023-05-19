@@ -1,4 +1,3 @@
-from __future__ import annotations
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import fields, Schema
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema , auto_field

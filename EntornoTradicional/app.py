@@ -4,8 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 import os
 from models import db
-from views import \
-    VistaSignIn, VistaLogIn, VistaTasksGet, VistaTasksPost , VistaFile, VistaTask
+from views import  VistaSignIn, VistaLogIn, VistaTasksGet, VistaTasksPost , VistaFile, VistaTask
 
 app = Flask(__name__)
 

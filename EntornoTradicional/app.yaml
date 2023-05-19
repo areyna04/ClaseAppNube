@@ -1,0 +1,13 @@
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT app:app
+
+runtime_config:
+    operating_system: "ubuntu22"
+    runtime_version: "3.11"
+
+env_variables:
+    SQLALCHEMY_DATABASE_URI: postgresql://postgres:convert@35.239.90.117:5432/appnube
+    TOPIC: topic-compresion-files
+    PUB_SUB_PROJECT_ID: laboratorios-385901
+    bucket_files: web_api_data
