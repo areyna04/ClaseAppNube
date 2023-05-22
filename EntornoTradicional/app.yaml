@@ -9,5 +9,5 @@ runtime_config:
 env_variables:
     SQLALCHEMY_DATABASE_URI: postgresql://postgres:convert@35.239.90.117:5432/appnube
     TOPIC: topic-compresion-files
-    PUB_SUB_PROJECT_ID: laboratorios-385901
+    GOOGLE_CLOUD_PROJECT: laboratorios-385901
     bucket_files: web_api_data
