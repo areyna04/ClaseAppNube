@@ -1,8 +1,28 @@
-# syntax=docker/dockerfile:1
+
 FROM python:3.11
-RUN apt-get update && apt-get -y install cron
-WORKDIR /app
-COPY . .
-RUN pip install --upgrade pip
+# Allow statements and log messages to immediately appear in the Cloud Run logs
+ENV PYTHONUNBUFFERED True
+
+# Copy application dependency manifests to the container image.
+# Copying this separately prevents re-running pip install on every code change.
+COPY requirements.txt ./
+
+# Install production dependencies.
 RUN pip install -r requirements.txt
-CMD CMD ["py", "app.py" ]
+
+# Copy local code to the container image.
+ENV APP_HOME /app
+ENV GOOGLE_CLOUD_PROJECT firm-structure-383412
+ENV SQLALCHEMY_DATABASE_URI postgresql://postgres:convert@35.239.90.117:5432/appnube
+ENV TOPIC topic-compresion-files
+ENV PUB_SUB_PROJECT_ID laboratorios-385901
+ENV bucket_files web_api_data
+WORKDIR $APP_HOME
+COPY . ./
+
+# Run the web service on container startup.
+# Use gunicorn webserver with one worker process and 8 threads.
+# For environments with multiple CPU cores, increase the number of workers
+# to be equal to the cores available.
+# Timeout is set to 0 to disable the timeouts of the workers to allow Cloud Run to handle instance scaling.
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 mainwk:app
