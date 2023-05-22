@@ -4,7 +4,8 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 import os
 from models import db
-from views import  VistaSignIn, VistaLogIn, VistaTasksGet, VistaTasksPost , VistaFile, VistaTask
+from views import  VistaSignIn, VistaLogIn, VistaTasksGet, VistaTasksPost , VistaFile, VistaTask 
+from views.viewWebHook  import VistaWebHook
 
 app = Flask(__name__)
 
@@ -28,7 +29,11 @@ api.add_resource(VistaTasksPost, '/api/tasks')
 api.add_resource(VistaTasksGet, '/api/tasks/<string:user>/<string:max>/<string:order>')
 api.add_resource(VistaFile, '/api/file/<int:id_request>/<string:original_file>')
 api.add_resource(VistaTask, '/api/task/<int:id_request>')
+api.add_resource(VistaTask, '/api/task/<int:id_request>')
+api.add_resource(VistaWebHook  , '/api/task/webhook')
+
+
 jwt = JWTManager(app)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1' , port=8080, debug=True)
