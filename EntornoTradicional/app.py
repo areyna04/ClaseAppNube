@@ -29,7 +29,6 @@ api.add_resource(VistaTasksPost, '/api/tasks')
 api.add_resource(VistaTasksGet, '/api/tasks/<string:user>/<string:max>/<string:order>')
 api.add_resource(VistaFile, '/api/file/<int:id_request>/<string:original_file>')
 api.add_resource(VistaTask, '/api/task/<int:id_request>')
-api.add_resource(VistaTask, '/api/task/<int:id_request>')
 api.add_resource(VistaWebHook  , '/api/task/webhook')
 
 
