@@ -1,6 +1,6 @@
 import unittest
-from EntornoTradicional.storage.cloudStorage import CloudStorage
-from EntornoTradicional.admin_files.ManagerFiles import ManagerFiles
+from  storage.cloudStorage import CloudStorage
+from  admin_files.ManagerFiles import ManagerFiles
 import os 
 
 

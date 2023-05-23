@@ -12,7 +12,7 @@ class VistaWebHook(Resource):
 
     def post(self):
        mensaje = json.loads(request.json)
-       ok  = comprimir_callback(mensaje)
+       ok  = self.comprimir_callback(mensaje)
        if ok :
            return 200
        else: 

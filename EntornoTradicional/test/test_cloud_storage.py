@@ -1,6 +1,6 @@
 import unittest
 import os 
-from EntornoTradicional.storage.cloudStorage import CloudStorage
+from   storage.cloudStorage import CloudStorage
 
 class StorageTestcase(unittest.TestCase ):
     
